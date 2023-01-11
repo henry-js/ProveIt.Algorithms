@@ -1,22 +1,28 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
-
-int rentForMins = 310;
-float cost = CalculateRentalCost(requestedRentalTimeMins: rentForMins);
+﻿int rentForMins = 310;
+var fromDate = DateTime.UtcNow;
+var toDate = fromDate.AddMinutes(rentForMins);
+float cost = CalculateRentalCost(fromDate, toDate);
 
 Console.WriteLine($"Cost to rent truck for {rentForMins} minutes: £{cost}");
 
-float CalculateRentalCost(int requestedRentalTimeMins, int initialPeriodCost = 25, int initialPeriodMins = 60, int chargePerPeriod = 50, int rentalPeriodMins = 60, int roundUpAfter = 10)
+float CalculateRentalCost(DateTime From, DateTime To)
 {
+    var requestedRentalTime = To - From;
+    var requestedRentalTimeMins = requestedRentalTime.TotalMinutes;
+    var standardPeriodMins = RentalDefaults.standardPeriodMins;
+    var initialPeriodCost = RentalDefaults.initialPeriodCost;
+    var initialPeriodMins = RentalDefaults.initialPeriodMins;
+    var roundUpAfter = RentalDefaults.roundUpAfter;
+    var standardPeriodCost = RentalDefaults.standardPeriodCost;
     bool roundUp;
     float finalCost = default;
-    int actualRentalTime;
-    var leftoverTime = requestedRentalTimeMins % rentalPeriodMins;
+    double actualRentalTime;
+    var leftoverTime = requestedRentalTimeMins % standardPeriodMins;
     roundUp = leftoverTime >= roundUpAfter;
 
     if (roundUp)
     {
-        actualRentalTime = requestedRentalTimeMins - leftoverTime + rentalPeriodMins;
+        actualRentalTime = requestedRentalTimeMins - leftoverTime + standardPeriodMins;
     }
     else
     {
@@ -26,9 +32,17 @@ float CalculateRentalCost(int requestedRentalTimeMins, int initialPeriodCost = 2
     actualRentalTime -= initialPeriodMins;
     while (actualRentalTime != 0)
     {
-        actualRentalTime -= rentalPeriodMins;
-        finalCost += chargePerPeriod;
+        actualRentalTime -= standardPeriodMins;
+        finalCost += standardPeriodCost;
     }
 
     return finalCost;
+}
+public static class RentalDefaults
+{
+    public static readonly int initialPeriodCost = 25;
+    public static readonly int initialPeriodMins = 60;
+    public static readonly int standardPeriodCost = 50;
+    public static readonly int standardPeriodMins = 60;
+    public static readonly int roundUpAfter = 10;
 }
