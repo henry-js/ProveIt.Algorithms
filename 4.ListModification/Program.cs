@@ -145,8 +145,7 @@ List<PersonModel> InsertRecordInTheMiddleIntoNewList(List<PersonModel> people)
 
     // TODO: Add a record after Paul Jones in the incoming list and return a new list that includes newPerson
     // HACK: The following line is incorrect but is used to get this to compile
-    var paul = people.Find(x => x.FirstName == "Paul" && x.LastName == "Jones") ?? throw new ArgumentNullException();
-    var index = people.IndexOf(paul);
+    var index = people.FindIndex(x => x.FirstName == "Paul" && x.LastName == "Jones");
     output = new(people);
     output.Insert(index + 1, newPerson);
 
@@ -168,31 +167,36 @@ List<PersonModel> SortAndReturnANewList(List<PersonModel> people)
 #region Bonus Challenge
 void InsertRecordLastIntoList(List<PersonModel> people)
 {
-    PersonModel newPerson = new PersonModel { FirstName = "Greg", LastName = "Brown" };
+    PersonModel newPerson = new() { FirstName = "Greg", LastName = "Brown" };
 
     // TODO: Add a record to the end of the incoming list
+    people.Add(newPerson);
 
 }
 
 void InsertRecordFirstIntoList(List<PersonModel> people)
 {
-    PersonModel newPerson = new PersonModel { FirstName = "Greg", LastName = "Brown" };
+    PersonModel newPerson = new() { FirstName = "Greg", LastName = "Brown" };
 
     // TODO: Add a record to the beginning of the incoming list
+    people.Insert(0, newPerson);
 
 }
 
 void InsertRecordInTheMiddleOfTheList(List<PersonModel> people)
 {
-    PersonModel newPerson = new PersonModel { FirstName = "Greg", LastName = "Brown" };
+    PersonModel newPerson = new() { FirstName = "Greg", LastName = "Brown" };
 
     // TODO: Add a record after Paul Jones in the incoming list
+    var index = people.FindIndex(0, x => x.FirstName == "Paul" && x.LastName == "Jones");
+    people.Insert(index + 1, newPerson);
 
 }
 
 void SortAList(List<PersonModel> people)
 {
     // TODO: Sort the incoming list values by fullname (ascending)
+    people.Sort((x, y) => x.FullName.CompareTo(y.FullName));
 }
 #endregion
 
