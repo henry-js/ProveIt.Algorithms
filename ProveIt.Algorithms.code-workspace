@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "./"
+		},
+		{
+			"path": "./1.PrimeNumber"
+		},
+		{
+			"path": "./2.Calculation"
+		},
+		{
+			"path": "./3.WordCount"
+		},
+		{
+			"path": "./4.ListModification"
+		},
+		{
+			"path": "./5.TruckRental"
+		}
+	],
+	"settings": {}
+}
