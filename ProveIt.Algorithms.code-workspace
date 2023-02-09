@@ -17,6 +17,9 @@
 		},
 		{
 			"path": "./5.TruckRental"
+		},
+		{
+			"path": "6.Linq"
 		}
 	],
 	"settings": {}
